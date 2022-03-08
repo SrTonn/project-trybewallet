@@ -54,7 +54,6 @@ class FormExpenses extends Component {
 
   render() {
     const {
-      id,
       value,
       description,
       currency,

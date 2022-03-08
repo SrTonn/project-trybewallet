@@ -5,7 +5,11 @@ import FormExpensive from '../components/FormExpensive';
 
 class Wallet extends React.Component {
   render() {
-    const { email } = this.props;
+    const { email, expenses } = this.props;
+    const total = expenses.reduce((acc, { value, currency, exchangeRates }) => {
+      const { ask } = exchangeRates[currency];
+      return acc + (+value * ask);
+    }, 0);
     return (
       <>
         <header>
@@ -15,7 +19,9 @@ class Wallet extends React.Component {
           </p>
           <p>
             Despesa Total: R$&nbsp;
-            <span data-testid="total-field">0.00</span>
+            <span data-testid="total-field">
+              {(total || 0)}
+            </span>
           </p>
           <p data-testid="header-currency-field">BRL</p>
         </header>
@@ -26,12 +32,16 @@ class Wallet extends React.Component {
   }
 }
 
-const mapStateToProps = ({ user }) => ({
+const mapStateToProps = ({ user, wallet }) => ({
   ...user,
+  ...wallet,
 });
 
 export default connect(mapStateToProps)(Wallet);
 
 Wallet.propTypes = {
   email: PropTypes.string.isRequired,
+  expenses: PropTypes.arrayOf(
+    PropTypes.object,
+  ).isRequired,
 };

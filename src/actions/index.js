@@ -3,7 +3,7 @@ export const WALLET_DATA = 'WALLET_DATA';
 
 const updateData = (type, state) => ({
   type,
-  payload: { ...state },
+  payload: state,
 });
 
 export default updateData;

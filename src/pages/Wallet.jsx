@@ -6,6 +6,7 @@ class Wallet extends React.Component {
   render() {
     const { email } = this.props;
     return (
+      <>
       <header>
         <p data-testid="email-field">
           Email:&nbsp;
@@ -17,6 +18,9 @@ class Wallet extends React.Component {
         </p>
         <p data-testid="header-currency-field">BRL</p>
       </header>
+
+        <FormExpensive />
+      </>
     );
   }
 }

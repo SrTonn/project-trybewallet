@@ -18,11 +18,16 @@ export default class Button extends Component {
   }
 }
 
+Button.defaultProps = {
+  type: 'button',
+  dataTestId: '',
+};
+
 Button.propTypes = {
   id: PropTypes.number.isRequired,
-  type: PropTypes.string.isRequired,
+  type: PropTypes.string,
   name: PropTypes.string.isRequired,
   label: PropTypes.string.isRequired,
-  dataTestId: PropTypes.string.isRequired,
+  dataTestId: PropTypes.string,
   handleClick: PropTypes.func.isRequired,
 };

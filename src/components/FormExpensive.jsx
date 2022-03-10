@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import fetchAwesomeApi from '../services/api';
-import updateData, { WALLET_CURRENCIES, WALLET_EXPENSIES } from '../actions';
+import updateData, { WALLET_CURRENCIES, WALLET_EXPENSES } from '../actions';
 
 class FormExpenses extends Component {
   state = {
@@ -44,7 +44,7 @@ class FormExpenses extends Component {
       exchangeRates,
     };
 
-    dispatch(updateData(WALLET_EXPENSIES, expensesObj));
+    dispatch(updateData(WALLET_EXPENSES, expensesObj));
     this.setState((prevState) => ({
       id: prevState.id + 1,
       value: '',

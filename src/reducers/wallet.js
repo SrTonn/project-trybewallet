@@ -1,4 +1,4 @@
-import { WALLET_CURRENCIES, WALLET_EXPENSIES } from '../actions';
+import { WALLET_CURRENCIES, WALLET_EXPENSES } from '../actions';
 
 const INITIAL_STATE = {
   currencies: [],
@@ -13,7 +13,7 @@ const wallet = (state = INITIAL_STATE, action) => {
     };
   }
 
-  if (action.type === WALLET_EXPENSIES) {
+  if (action.type === WALLET_EXPENSES) {
     return {
       currencies: state.currencies,
       expenses: [...state.expenses, action.payload],

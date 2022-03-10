@@ -1,4 +1,4 @@
-import { WALLET_CURRENCIES, WALLET_EXPENSES } from '../actions';
+import { WALLET_CURRENCIES, WALLET_EXPENSES, WALLET_EXPENSES_DELETE } from '../actions';
 
 const INITIAL_STATE = {
   currencies: [],
@@ -17,6 +17,13 @@ const wallet = (state = INITIAL_STATE, action) => {
     return {
       currencies: state.currencies,
       expenses: [...state.expenses, action.payload],
+    };
+  }
+
+  if (action.type === WALLET_EXPENSES_DELETE) {
+    return {
+      currencies: state.currencies,
+      expenses: state.expenses.filter(({ id }) => id !== +action.payload),
     };
   }
 

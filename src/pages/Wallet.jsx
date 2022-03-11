@@ -21,7 +21,7 @@ class Wallet extends React.Component {
           <p>
             Despesa Total: R$&nbsp;
             <span data-testid="total-field">
-              {(total || 0)}
+              {(total || 0).toFixed(2)}
             </span>
           </p>
           <p data-testid="header-currency-field">BRL</p>

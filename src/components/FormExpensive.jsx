@@ -2,7 +2,12 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import fetchAwesomeApi from '../services/api';
-import updateData, { WALLET_CURRENCIES, WALLET_EXPENSES } from '../actions';
+import updateData, {
+  IS_EDIT_MODE_ON,
+  WALLET_CURRENCIES,
+  WALLET_EXPENSES,
+  WALLET_EXPENSES_EDIT,
+} from '../actions';
 
 class FormExpenses extends Component {
   state = {
@@ -32,7 +37,7 @@ class FormExpenses extends Component {
 
   handleClick = async () => {
     const { id, value, description, currency, method, tag } = this.state;
-    const { dispatch } = this.props;
+    const { dispatch, editRow } = this.props;
     const exchangeRates = await fetchAwesomeApi();
     const expensesObj = {
       id,
@@ -43,6 +48,15 @@ class FormExpenses extends Component {
       tag,
       exchangeRates,
     };
+
+    if (editRow?.isEditModeOn) {
+      expensesObj.id = editRow.id;
+      dispatch(updateData(WALLET_EXPENSES_EDIT, expensesObj));
+      dispatch(updateData(IS_EDIT_MODE_ON, {
+        isEditModeOn: false,
+      }));
+      return;
+    }
 
     dispatch(updateData(WALLET_EXPENSES, expensesObj));
     this.setState((prevState) => ({
@@ -61,7 +75,7 @@ class FormExpenses extends Component {
       method,
       tag,
     } = this.state;
-
+    const { editRow } = this.props;
     return (
       <nav>
         <label htmlFor="value">
@@ -147,18 +161,24 @@ class FormExpenses extends Component {
         <button
           type="button"
           onClick={ this.handleClick }
+          data-testid={ editRow?.isEditModeOn ? 'edit-btn' : null }
         >
-          Adicionar despesa
+          {editRow?.isEditModeOn ? 'Editar despesa' : 'Adicionar despesa'}
         </button>
       </nav>
     );
   }
 }
 
-export default connect(null)(FormExpenses);
+const mapStateToProps = ({ wallet }) => ({
+  ...wallet,
+});
+
+export default connect(mapStateToProps)(FormExpenses);
 
 FormExpenses.propTypes = {
   dispatch: PropTypes.func.isRequired,
+  editRow: PropTypes.shape(PropTypes.object).isRequired,
 };
 
 // Ref.: https://github.com/tryber/sd-018-b-project-trybewallet/blob/c2315ed03f5c3c021c1875fe6fb592985ef02cc9/src/components/FormExpenses.jsx

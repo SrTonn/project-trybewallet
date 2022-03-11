@@ -1,14 +1,22 @@
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import updateData, { WALLET_EXPENSES_DELETE } from '../actions';
+import updateData, {
+  IS_EDIT_MODE_ON,
+  WALLET_EXPENSES_DELETE,
+} from '../actions';
 import Button from './Button';
 
 class Table extends Component {
-  handleClick = ({ target: { id } }) => {
+  handleClick = ({ target: { id, name } }) => {
     const { dispatch } = this.props;
-
-    dispatch(updateData(WALLET_EXPENSES_DELETE, id));
+    if (name === 'excluir') dispatch(updateData(WALLET_EXPENSES_DELETE, id));
+    if (name === 'editar') {
+      dispatch(updateData(IS_EDIT_MODE_ON, {
+        id: +id,
+        isEditModeOn: true,
+      }));
+    }
   }
 
   render() {
@@ -44,6 +52,7 @@ class Table extends Component {
                   <Button
                     label="Editar"
                     name="editar"
+                    dataTestId="edit-btn"
                     handleClick={ this.handleClick }
                     id={ id }
                   />

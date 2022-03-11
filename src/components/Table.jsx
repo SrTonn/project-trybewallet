@@ -36,7 +36,7 @@ class Table extends Component {
                 <td>{tag}</td>
                 <td>{method}</td>
                 <td>{(+value || 0).toFixed(2)}</td>
-                <td>{exchangeRates[currency].name}</td>
+                <td>{exchangeRates[currency].name.replace('/Real Brasileiro', '')}</td>
                 <td>{(+exchangeRates[currency].ask).toFixed(2)}</td>
                 <td>{(exchangeRates[currency].ask * value).toFixed(2)}</td>
                 <td>Real</td>

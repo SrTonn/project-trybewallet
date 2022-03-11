@@ -71,7 +71,7 @@ class FormExpenses extends Component {
       value,
       description,
       currency,
-      currencyTypes: coins,
+      currencyTypes,
       method,
       tag,
     } = this.state;
@@ -113,7 +113,7 @@ class FormExpenses extends Component {
             data-testid="currency-input"
             type="select-multiple"
           >
-            { coins.map((coin) => (
+            { currencyTypes?.map((coin) => (
               <option
                 key={ coin }
                 value={ coin }

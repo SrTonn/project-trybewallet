@@ -15,7 +15,6 @@ class FormExpenses extends Component {
     value: '',
     description: '',
     currency: 'USD',
-    currencyTypes: [],
     method: 'Pix',
     tag: 'Alimentação',
   };
@@ -24,7 +23,6 @@ class FormExpenses extends Component {
     const { dispatch } = this.props;
     const currencyTypes = await fetchAwesomeApi({ coins: true });
 
-    this.setState({ currencyTypes });
     dispatch(updateData(WALLET_CURRENCIES, currencyTypes));
   }
 
@@ -71,11 +69,10 @@ class FormExpenses extends Component {
       value,
       description,
       currency,
-      currencyTypes,
       method,
       tag,
     } = this.state;
-    const { editRow } = this.props;
+    const { editRow, currencies: currencyTypes } = this.props;
     return (
       <nav>
         <label htmlFor="value">
@@ -178,6 +175,7 @@ export default connect(mapStateToProps)(FormExpenses);
 
 FormExpenses.propTypes = {
   dispatch: PropTypes.func.isRequired,
+  currencies: PropTypes.arrayOf(PropTypes.string).isRequired,
   editRow: PropTypes.shape(PropTypes.object).isRequired,
 };
 

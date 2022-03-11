@@ -9,26 +9,27 @@ import {
 const INITIAL_STATE = {
   currencies: [],
   expenses: [],
+  editRow: {},
 };
 
 const wallet = (state = INITIAL_STATE, action) => {
   if (action.type === WALLET_CURRENCIES) {
     return {
+      ...state,
       currencies: action.payload,
-      expenses: state.expenses,
     };
   }
 
   if (action.type === WALLET_EXPENSES) {
     return {
-      currencies: state.currencies,
+      ...state,
       expenses: [...state.expenses, action.payload],
     };
   }
 
   if (action.type === WALLET_EXPENSES_DELETE) {
     return {
-      currencies: state.currencies,
+      ...state,
       expenses: state.expenses.filter(({ id }) => id !== +action.payload),
     };
   }

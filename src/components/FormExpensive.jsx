@@ -17,16 +17,12 @@ class FormExpenses extends Component {
     currency: 'USD',
     method: 'Pix',
     tag: 'Alimentação',
-    exchangeRates: [],
   };
 
   componentDidMount = async () => {
     const { dispatch } = this.props;
-    const exchangeRates = await fetchAwesomeApi();
-    const currencyTypes = Object.keys(exchangeRates)
-      .filter((current) => current !== 'USDT');
+    const currencyTypes = await fetchAwesomeApi({ coins: true });
 
-    this.setState({ exchangeRates });
     dispatch(updateData(WALLET_CURRENCIES, currencyTypes));
   }
 
@@ -38,9 +34,8 @@ class FormExpenses extends Component {
   }
 
   handleClick = async () => {
-    const { id, value, description, currency, method, tag, exchangeRates } = this.state;
+    const { id, value, description, currency, method, tag } = this.state;
     const { dispatch, editRow } = this.props;
-    await fetchAwesomeApi();
     const expensesObj = {
       id,
       value,
@@ -48,11 +43,11 @@ class FormExpenses extends Component {
       currency,
       method,
       tag,
-      exchangeRates,
     };
 
     if (editRow?.isEditModeOn) {
       expensesObj.id = editRow.id;
+      expensesObj.exchangeRates = editRow.exchangeRates;
       dispatch(updateData(WALLET_EXPENSES_EDIT, expensesObj));
       dispatch(updateData(IS_EDIT_MODE_ON, {
         isEditModeOn: false,
@@ -60,6 +55,7 @@ class FormExpenses extends Component {
       return;
     }
 
+    expensesObj.exchangeRates = await fetchAwesomeApi();
     dispatch(updateData(WALLET_EXPENSES, expensesObj));
     this.setState((prevState) => ({
       id: prevState.id + 1,

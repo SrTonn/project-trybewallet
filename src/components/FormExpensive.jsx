@@ -184,3 +184,7 @@ FormExpenses.propTypes = {
 };
 
 // Ref.: https://github.com/tryber/sd-018-b-project-trybewallet/blob/c2315ed03f5c3c021c1875fe6fb592985ef02cc9/src/components/FormExpenses.jsx
+
+/**
+ * As alterações para passar no requisito 09 no github foram sugeridas pelo @EduardoSantosF
+ */

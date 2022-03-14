@@ -177,10 +177,14 @@ const mapStateToProps = ({ wallet }) => ({
 
 export default connect(mapStateToProps)(FormExpenses);
 
+FormExpenses.defaultProps = {
+  editRow: {},
+};
+
 FormExpenses.propTypes = {
   dispatch: PropTypes.func.isRequired,
   currencies: PropTypes.arrayOf(PropTypes.string).isRequired,
-  editRow: PropTypes.shape(PropTypes.object).isRequired,
+  editRow: PropTypes.shape(PropTypes.object),
 };
 
 // Ref.: https://github.com/tryber/sd-018-b-project-trybewallet/blob/c2315ed03f5c3c021c1875fe6fb592985ef02cc9/src/components/FormExpenses.jsx

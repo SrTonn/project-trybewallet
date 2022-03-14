@@ -17,12 +17,16 @@ class FormExpenses extends Component {
     currency: 'USD',
     method: 'Pix',
     tag: 'Alimentação',
+    exchangeRates: [],
   };
 
   componentDidMount = async () => {
     const { dispatch } = this.props;
-    const currencyTypes = await fetchAwesomeApi({ coins: true });
+    const exchangeRates = await fetchAwesomeApi();
+    const currencyTypes = Object.keys(exchangeRates)
+      .filter((current) => current !== 'USDT');
 
+    this.setState({ exchangeRates });
     dispatch(updateData(WALLET_CURRENCIES, currencyTypes));
   }
 
@@ -34,9 +38,9 @@ class FormExpenses extends Component {
   }
 
   handleClick = async () => {
-    const { id, value, description, currency, method, tag } = this.state;
+    const { id, value, description, currency, method, tag, exchangeRates } = this.state;
     const { dispatch, editRow } = this.props;
-    const exchangeRates = await fetchAwesomeApi();
+    await fetchAwesomeApi();
     const expensesObj = {
       id,
       value,
